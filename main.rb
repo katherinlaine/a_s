@@ -1,6 +1,6 @@
 class Main
   def initialize
-    @known_domains = Array.new
+    @known_domains = {}
     @data = {
       "John Ferguson" => "john.ferguson@alphasights.com",
       "Damon Aw" => "damon.aw@alphasights.com",
@@ -13,11 +13,19 @@ class Main
 
   def collect_known_domains
     @data.each do |name, email|
+      address = email.split('@').first
+      @names = address.split('.')
       domain = email.split('@').last
-      unless @known_domains.include? domain
-        @known_domains << domain
+      assess_format
+      if @known_domains.has_key? domain
+        if @known_domains[domain] != @format
+          @known_domains[domain] = "Conflicting Data"
+        end
+      else
+        @known_domains[domain] = @format
       end
     end
+    binding.pry
   end
 
   def enter_query
@@ -46,17 +54,13 @@ class Main
 
   def assess_format
     if first_is_initial? && last_is_initial?
-      puts "initial initial"
-      first_initial_dot_last_initial
+      @format = :first_initial_dot_last_initial
     elsif first_is_initial?
-      puts "initial name"
-      first_initial_dot_last_name
+      @format = :first_initial_dot_last_name
     elsif last_is_initial?
-      puts "name initial"
-      first_name_dot_last_initial
+      @format = :first_name_dot_last_initial
     else
-      puts "name name"
-      first_name_dot_last_name
+      @format = :first_name_dot_last_name
     end
   end
 
@@ -88,5 +92,5 @@ class Main
 end
 
 round = Main.new
-round.collect_domains
-round.get_user_input
+round.collect_known_domains
+round.enter_query
