@@ -30,16 +30,14 @@ class AddressAssembler
 
   def check_for_conflicting_data
     if known_domains[@domain] == "Conflicting Data"
-      puts "Unable to determine format."
+      puts "Unable to determine format due to conflicting data."
       true
     end
   end
 
   def prepare_parts
     format = known_domains[@domain]
-    puts format
     formatting = @possible_formats[format]
-    puts formatting
     @first_name = formatting[0]
     @last_name = formatting[1]
   end
