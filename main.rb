@@ -11,9 +11,11 @@ class Main
   end
 
   def run
+    puts "Please enter the following information to obtain the advisor's email address: "
     until @answer == "n"
       enter_query
       assemble_address
+      puts "---"
       puts "Predict another address? (y/n)"
       @answer = gets.chomp.downcase
     end

@@ -5,12 +5,18 @@ class Query
     get_user_input
   end
 
+  private
+
   def get_user_input
     print "First Name: "
-    @first_name = gets.chomp
+    @first_name = clean(gets.chomp)
     print "Last Name: "
-    @last_name = gets.chomp
+    @last_name = clean(gets.chomp)
     print "Domain: "
-    @domain = gets.chomp
+    @domain = clean(gets.chomp)
+  end
+
+  def clean(input)
+    input.strip.downcase
   end
 end
